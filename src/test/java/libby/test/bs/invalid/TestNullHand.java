@@ -7,7 +7,6 @@ import charlie.card.Hid;
 import charlie.dealer.Seat;
 import charlie.util.Play;
 import libby.client.BasicStrategy;
-import org.apache.commons.lang.ObjectUtils;
 
 /**
  Tests is the player's hand is NULL
@@ -21,9 +20,17 @@ public class TestNullHand extends TestCase {
         // Hand needs a hid which we can generate with a seat.
         Hand myHand = new Hand(new Hid(Seat.YOU));
 
+        // Again, only up-card rank matters, not suit.
+        Card upCard = new Card(2,Card.Suit.HEARTS);
+
+        //refactored BasicStrategyStarter -> BasicStrategy.
         BasicStrategy strategy = new BasicStrategy ();
 
-        // This throws an exception if hand is NULL
-        assert myHand.size() == 0;
+        // Play should match the basic strategy.
+        Play play = strategy.getPlay(myHand, upCard);
+
+        // This throws an exception if play is not the expected Play NONE.
+        // We didn't put any cards in the player's hand so we expect the Play to be NONE
+        assert play == Play.NONE;
     }
 }
