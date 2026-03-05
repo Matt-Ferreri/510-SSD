@@ -265,8 +265,11 @@ public class BasicStrategy {
      * @return True if valid, false otherwise
      */
     boolean isValid(Hand hand) {
-        //return isValid(hand);
-        return true;
+        if(hand.size() >= 2) {
+            return true;
+        } else {
+            return false;
+        }
     }
 
     /**
