@@ -23,13 +23,18 @@ public class TestNoUpCard extends TestCase {
         myHand.hit(new Card(4, Card.Suit.CLUBS));
         myHand.hit(new Card(3, Card.Suit.HEARTS));
 
-        BasicStrategy strategy = new BasicStrategy ();
-
-        // put a null up card
+        // assign a null up card
         Card upCard = null;
 
-        // throws an exception if upCard is null
-        assert upCard != null;
+        BasicStrategy strategy = new BasicStrategy ();
+
+        // Play should match the basic strategy.
+        Play play = strategy.getPlay(myHand, upCard);
+
+
+        // This throws an exception if there's no upCard
+        // We can't have more than 21 with 2 cards in hand so there should be no play
+        assert play = Play.NONE;
 
     }
 }

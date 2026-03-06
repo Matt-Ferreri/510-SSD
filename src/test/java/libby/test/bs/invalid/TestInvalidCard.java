@@ -23,10 +23,16 @@ public class TestInvalidCard extends TestCase {
         // 30 is an invalid rank
         myHand.hit(new Card(30, Card.Suit.HEARTS));
 
+        // Again, only up-card rank matters, not suit.
+        Card upCard = new Card(2,Card.Suit.HEARTS);
+
         BasicStrategy strategy = new BasicStrategy ();
 
+        // Play should match the basic strategy.
+        Play play = strategy.getPlay(myHand, upCard);
+
         // This throws an exception if there's an invalid card
-        // We can't have more than 21 with 2 cards in hand
-        assert myHand.size() == 2 && myHand.getValue() > 21;
+        // We can't have more than 21 with 2 cards in hand so there should be no play
+        assert play = Play.NONE;
     }
 }

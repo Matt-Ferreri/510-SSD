@@ -20,6 +20,8 @@ public class TestNullHand extends TestCase {
         // Hand needs a hid which we can generate with a seat.
         Hand myHand = new Hand(new Hid(Seat.YOU));
 
+        // player does not get any cards
+
         // Again, only up-card rank matters, not suit.
         Card upCard = new Card(2,Card.Suit.HEARTS);
 

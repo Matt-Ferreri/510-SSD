@@ -24,11 +24,17 @@ public class TestDealtThreeCards extends TestCase {
         myHand.hit(new Card(10, Card.Suit.HEARTS));
         myHand.hit(new Card(7, Card.Suit.SPADES));
 
+        // Again, only up-card rank matters, not suit.
+        Card upCard = new Card(2,Card.Suit.HEARTS);
 
         BasicStrategy strategy = new BasicStrategy ();
 
-        // This throws an exception if there are three cards in the hand
-        // We can't get dealt three cards right away
-        assert myHand.size() == 3 && myHand.getValue() > 21;
+        // Play should match the basic strategy.
+        Play play = strategy.getPlay(myHand, upCard);
+
+
+        // Players can't get dealt three cards so the player should break right away
+        // This throws an exception if play is not the expected Play NONE.
+        assert play = Play.NONE;
     }
 }
