@@ -28,7 +28,7 @@ public class TestNullHand extends TestCase {
         //refactored BasicStrategyStarter -> BasicStrategy.
         BasicStrategy strategy = new BasicStrategy ();
 
-        // Play should match the basic strategy.
+        // Play should match the basic strategy
         Play play = strategy.getPlay(myHand, upCard);
 
         // This throws an exception if play is not the expected Play NONE.

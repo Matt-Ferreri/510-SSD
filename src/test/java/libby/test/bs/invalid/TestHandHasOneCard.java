@@ -31,7 +31,7 @@ public class TestHandHasOneCard extends TestCase {
         Play play = strategy.getPlay(myHand, upCard);
 
         // Players must get dealt two cards and sum has to equal more than 2, since 2 is not an option, we should get PLAY.NONE
-        // This throws an exception if play is not the expected Play NONE.
+        // This throws an exception if play is not the expected Play NONE
         assert play = Play.NONE;
     }
 }

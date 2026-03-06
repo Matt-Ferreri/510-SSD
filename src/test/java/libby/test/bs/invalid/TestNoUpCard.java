@@ -28,7 +28,7 @@ public class TestNoUpCard extends TestCase {
 
         BasicStrategy strategy = new BasicStrategy ();
 
-        // Play should match the basic strategy.
+        // Play should match the basic strategy
         Play play = strategy.getPlay(myHand, upCard);
 
 
