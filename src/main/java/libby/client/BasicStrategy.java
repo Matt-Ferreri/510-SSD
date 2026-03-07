@@ -265,11 +265,7 @@ public class BasicStrategy {
      * @return True if valid, false otherwise
      */
     boolean isValid(Hand hand) {
-        if(hand.size() >= 2) {
-            return true;
-        } else {
-            return false;
-        }
+        return hand.size() >= 2;
     }
 
     /**
@@ -278,7 +274,6 @@ public class BasicStrategy {
      * @return True if valid, false otherwise
      */
     boolean isValid(Card card) {
-        //return isValid(card);
-        return true;
+        return card.getRank() <= 10;
     }
 }

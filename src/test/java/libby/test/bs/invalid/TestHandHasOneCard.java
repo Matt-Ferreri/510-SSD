@@ -1,10 +1,11 @@
 package libby.test.bs.invalid;
 
+import junit.framework.TestCase;
 import charlie.card.Card;
 import charlie.card.Hand;
 import charlie.card.Hid;
 import charlie.dealer.Seat;
-import junit.framework.TestCase;
+import charlie.util.Play;
 import libby.client.BasicStrategy;
 
 /**
@@ -32,6 +33,6 @@ public class TestHandHasOneCard extends TestCase {
 
         // Players must get dealt two cards and sum has to equal more than 2, since 2 is not an option, we should get PLAY.NONE
         // This throws an exception if play is not the expected Play NONE
-        assert play = Play.NONE;
+        assert play == Play.NONE;
     }
 }

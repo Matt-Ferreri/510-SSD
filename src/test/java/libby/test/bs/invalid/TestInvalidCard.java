@@ -5,6 +5,7 @@ import charlie.card.Card;
 import charlie.card.Hand;
 import charlie.card.Hid;
 import charlie.dealer.Seat;
+import charlie.util.Play;
 import libby.client.BasicStrategy;
 
 /**
@@ -21,10 +22,10 @@ public class TestInvalidCard extends TestCase {
 
         myHand.hit(new Card(4, Card.Suit.CLUBS));
         // 30 is an invalid rank
-        myHand.hit(new Card(30, Card.Suit.HEARTS));
+        myHand.hit(new Card(5, Card.Suit.HEARTS));
 
         // Again, only up-card rank matters, not suit.
-        Card upCard = new Card(2,Card.Suit.HEARTS);
+        Card upCard = new Card(30,Card.Suit.HEARTS);
 
         BasicStrategy strategy = new BasicStrategy ();
 
@@ -32,7 +33,7 @@ public class TestInvalidCard extends TestCase {
         Play play = strategy.getPlay(myHand, upCard);
 
         // This throws an exception if there's an invalid card
-        // We can't have more than 21 with 2 cards in hand so there should be no play
-        assert play = Play.NONE;
+        // We can't have a card of rank 30, so we expect the Play to be NONE
+        assert play == Play.NONE;
     }
 }
