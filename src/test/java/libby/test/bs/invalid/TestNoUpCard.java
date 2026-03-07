@@ -32,9 +32,7 @@ public class TestNoUpCard extends TestCase {
         // Play should match the basic strategy
         Play play = strategy.getPlay(myHand, upCard);
 
-
-        // This throws an exception if there's no upCard
-        // We can't have more than 21 with 2 cards in hand so there should be no play
+        // This throws an exception if play is not the expected Play NONE because the upCard is null
         assert play == Play.NONE;
 
     }

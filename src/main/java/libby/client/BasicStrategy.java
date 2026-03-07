@@ -274,6 +274,6 @@ public class BasicStrategy {
      * @return True if valid, false otherwise
      */
     boolean isValid(Card card) {
-        return card.getRank() <= 10;
+        return card != null && card.getRank() <= 10;
     }
 }

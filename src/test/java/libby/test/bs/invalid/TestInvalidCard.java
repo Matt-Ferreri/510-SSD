@@ -32,7 +32,7 @@ public class TestInvalidCard extends TestCase {
         // Play should match the basic strategy
         Play play = strategy.getPlay(myHand, upCard);
 
-        // This throws an exception if there's an invalid card
+        // This throws an exception if play is not the expected Play NONE.
         // We can't have a card of rank 30, so we expect the Play to be NONE
         assert play == Play.NONE;
     }
