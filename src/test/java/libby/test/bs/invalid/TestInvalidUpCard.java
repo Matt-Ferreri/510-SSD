@@ -5,14 +5,13 @@ import charlie.card.Card;
 import charlie.card.Hand;
 import charlie.card.Hid;
 import charlie.dealer.Seat;
-import charlie.util.Play;
 import libby.client.BasicStrategy;
 
 /**
- The play gets dealt three cards and breaks
+ The up card is of invalid rank
  */
 
-public class TestDealtThreeCards extends TestCase {
+public class TestInvalidUpCard extends TestCase {
     /**
      * Runs the test.
      */
@@ -20,13 +19,12 @@ public class TestDealtThreeCards extends TestCase {
         // Hand needs a hid which we can generate with a seat.
         Hand myHand = new Hand(new Hid(Seat.YOU));
 
-        // player gets dealt three cards and then breaks
+        // player gets dealt two cards
         myHand.hit(new Card(9, Card.Suit.CLUBS));
         myHand.hit(new Card(10, Card.Suit.HEARTS));
-        myHand.hit(new Card(7, Card.Suit.SPADES));
 
-        // Again, only up-card rank matters, not suit.
-        Card upCard = new Card(2,Card.Suit.HEARTS);
+        // up-card has rank 12
+        Card upCard = new Card(12,Card.Suit.HEARTS);
 
         BasicStrategy strategy = new BasicStrategy ();
 
@@ -34,7 +32,7 @@ public class TestDealtThreeCards extends TestCase {
         Play play = strategy.getPlay(myHand, upCard);
 
 
-        // Players can't get dealt three cards so the player should break right away
+        // Upcard can not be of value 12
         // This throws an exception if play is not the expected Play NONE.
         assert play == Play.NONE;
     }
