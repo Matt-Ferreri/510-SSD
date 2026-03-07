@@ -5,6 +5,7 @@ import charlie.card.Card;
 import charlie.card.Hand;
 import charlie.card.Hid;
 import charlie.dealer.Seat;
+import charlie.util.Play;
 import libby.client.BasicStrategy;
 
 /**
@@ -35,6 +36,6 @@ public class TestDealtThreeCards extends TestCase {
 
         // Players can't get dealt three cards so the player should break right away
         // This throws an exception if play is not the expected Play NONE.
-        assert play = Play.NONE;
+        assert play == Play.NONE;
     }
 }
