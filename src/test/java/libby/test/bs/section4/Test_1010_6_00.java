@@ -9,12 +9,12 @@ import charlie.util.Play;
 import libby.client.BasicStrategy;
 
 /**
- * Tests my 2,2 vs dealer 2 which should be SPLIT.
+ * Tests my 10,10 vs dealer 6 which should be STAY.
  * <p>Except this version is only a starter that fails without
  * completing BasicStrategy.</p>
  * @author Ron.Coleman
  */
-public class Test_P2_2_00 extends TestCase {
+public class Test_1010_6_00 extends TestCase {
     /**
      * Runs the test.
      */
@@ -23,11 +23,11 @@ public class Test_P2_2_00 extends TestCase {
         Hand myHand = new Hand(new Hid(Seat.YOU));
 
         // Put two cards in the hand, only rank matters, not suit.
-        myHand.hit(new Card(2, Card.Suit.CLUBS));
-        myHand.hit(new Card(2, Card.Suit.DIAMONDS));
+        myHand.hit(new Card(10, Card.Suit.CLUBS));
+        myHand.hit(new Card(10, Card.Suit.DIAMONDS));
 
         // Again, only up-card rank matters, not suit.
-        Card upCard = new Card(2,Card.Suit.HEARTS);
+        Card upCard = new Card(6,Card.Suit.HEARTS);
 
         //refactored BasicStrategyStarter -> BasicStrategy.
         BasicStrategy strategy = new BasicStrategy ();
@@ -36,6 +36,6 @@ public class Test_P2_2_00 extends TestCase {
         Play play = strategy.getPlay(myHand, upCard);
 
         // This throws an exception if play is not the expected Play.
-        assert play == Play.SPLIT;
+        assert play == Play.STAY;
     }
 }
