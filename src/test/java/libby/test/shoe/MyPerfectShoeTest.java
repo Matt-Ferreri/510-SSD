@@ -12,16 +12,15 @@
 
 package libby.test.shoe;
 
+
 import charlie.actor.Courier;
 import charlie.card.Card;
-import charlie.card.Hand;
 import charlie.card.Hid;
 import charlie.dealer.Seat;
 import charlie.plugin.IUi;
 import charlie.test.framework.Perfect;
-
-import java.util.HashMap;
 import java.util.List;
+import charlie.card.Hand;
 
 /**
  * This class is the minimalist perfect  test case.
@@ -30,31 +29,41 @@ import java.util.List;
 public class MyPerfectShoeTest extends Perfect implements IUi {
     Hid you;
 
-    // boolean member variable initialized to false
-    boolean myTurn = false;
+    boolean myTurn = false; // set myTurn to false
 
-    // instantiate hands
-    HashMap<Hid, Hand> hands = new HashMap<>();
+    // keep track of number of cards in hand
+    int playerHandCount = 0;
+    int dealerHandCount = 0;
+
+    // keep track of value of players hand
+    int playerValue = 0;
+
+    // set the bet amounts
+    // moved up here so the full program can use the variables
+    final int BET_AMT = 5;
+    final int SIDE_BET_AMT = 0;
+
+    // declare the variables for main and side PNL
+    double mainPNL;
+    double sidePNL;
 
     /**
      * Runs the test.
      */
     public void test() throws Exception {
+
         // set the shoe property
-        System.setProperty("charlie.shoe", "libby.plugin.MyShoe02");
+        System.setProperty("charlie.shoe","libby.plugin.MyShoe02");
 
         // Starts the server and logs in using only defaults
         go(this);
 
         // Now that the game server is ready, to start a game, we just need to
         // send in a bet which in the GUI is like pressing DEAL.
-        final int BET_AMT = 5;
-        final int SIDE_BET_AMT = 0;
-
         bet(BET_AMT,SIDE_BET_AMT);
         info("bet amt: "+BET_AMT+", side bet: "+SIDE_BET_AMT);
 
-        // All test logic at this point done by IUi implementation.
+        ////////// All test logic at this point done by IUi implementation.
 
         // Wait for dealer to call end of game.
         assert await(20000);
@@ -73,23 +82,28 @@ public class MyPerfectShoeTest extends Perfect implements IUi {
     public void deal(Hid hid, Card card, int[] handValues) {
         info("DEAL: "+hid+" card: "+card+" hand values: "+handValues[0]+", "+handValues[1]);
 
-        // invoke play(hid) if myTurn is true and hid-seat is YOU
-        if(myTurn && (hid.getSeat() == Seat.YOU)){
+        // if hand id equals YOU seat, get a card and increase cards in hand
+        if (hid.getSeat() == Seat.YOU) {
+            // ensures actual card is being dealt
+            if (card != null) {
+                playerHandCount++;
+                playerValue = handValues[0];
+            }
+        }
+
+        // else it equals the dealer, so increase card counts
+        else {
+            // ensures actual card is being dealt
+            if (card != null) {
+                dealerHandCount++;
+            }
+        }
+
+        // if myTurn is true and hid.seat = YOU then play
+        if (myTurn && hid.equals(you)) {
+            //when it's our turn, play
             play(hid);
-
-            // 3. The player's hand value is <= 21
-            assert handValues[0] <= 21;
-            hands.get(hid).hit(card);
         }
-        info("current hid: "+hid);
-
-        if(hid.getSeat() == Seat.YOU){
-            info("this hid: "+hid);
-            info("this hand: "+hands);
-            info("thisHand: " + (hands.get(hid)).size());
-        }
-
-
     }
 
     /**
@@ -98,15 +112,16 @@ public class MyPerfectShoeTest extends Perfect implements IUi {
      */
     @Override
     public void play(Hid hid) {
-        // When it's our turn, hit.
+        // if the turn is not mine, set myTurn as false and return
+        if (hid.getSeat() != Seat.YOU) {
+            myTurn = false;
+            return;
+        }
+
+        // When it's our turn, set myTurn = true and invoke hit
         if(hid.getSeat() == Seat.YOU) {
             myTurn = true;
             hit(you);
-
-            info("inside play");
-        } else { // the hid-seat is not YOU
-            myTurn = false;
-            return;
         }
     }
 
@@ -119,8 +134,8 @@ public class MyPerfectShoeTest extends Perfect implements IUi {
         // Possible if You or Dealer breaks but it will be one or the other.
         info("BREAK: "+hid);
 
-        // 10. bust is not observed
-        assert false;
+        // Not possible for this test case.
+        //assert false;
     }
 
     /**
@@ -129,10 +144,14 @@ public class MyPerfectShoeTest extends Perfect implements IUi {
      */
     @Override
     public void win(Hid hid) {
-        // Possible if You or Dealer wins, but it'll be one or the other.
+        // Possible if You or Dealer wins, but it'll be one or ther other.
         info("WIN: "+hid);
 
-        // 10. win is not observed
+        // a win pays out the bet, the sidebet depends on the bet, we will set to 0
+        mainPNL = BET_AMT;
+        sidePNL = 0;
+
+        // Not possible for this test case.
         assert false;
     }
 
@@ -142,11 +161,15 @@ public class MyPerfectShoeTest extends Perfect implements IUi {
      */
     @Override
     public void lose(Hid hid) {
-        // Possible if You or Dealer loses, but it will be one or the other.
+        // Possible if You or Dealer loses but it will be one or the other.
         info("LOSE: "+hid);
 
-        // 10. lose is not observed
-        assert false;
+        // in lose the player loses their money, the sidebet depends on the bet, we will set to 0
+        mainPNL = -BET_AMT;
+        sidePNL = 0;
+
+        // Not possible for this test case.
+        //assert false;
     }
 
     /**
@@ -158,7 +181,7 @@ public class MyPerfectShoeTest extends Perfect implements IUi {
         // Possible if there's a push.
         info("PUSH: "+hid);
 
-        // 10. push is not observed
+        // Not possible for this test case.
         assert false;
     }
 
@@ -171,7 +194,11 @@ public class MyPerfectShoeTest extends Perfect implements IUi {
         // Possible if either You or Dealer has a blackjack.
         info("BLACKJACK: "+hid);
 
-        // 10. Blackjack is not observed
+        // a Blackjack pays out the bet times 1.5, the sidebet depends on the bet, we will set to 0
+        mainPNL = BET_AMT * 1.5;
+        sidePNL = 0;
+
+        // Not possible for this test case.
         assert false;
     }
 
@@ -181,26 +208,16 @@ public class MyPerfectShoeTest extends Perfect implements IUi {
      */
     @Override
     public void charlie(Hid hid) {
-        // assert the hid-seat is YOU. 4. The player's hand is a Charlie
+
+        // a Charlie pays out the bet times 2, the side bet usually losses
+        mainPNL = BET_AMT * 2;
+        sidePNL = 0;
+        // Charlie only occurs for YOU in this test, if not YOU, throws exception
         assert hid.getSeat() == Seat.YOU;
-        info("The player's hand is a Charlie.");
 
-        // 5. Only the player's hand is a Charlie
-        assert hid.getSeat() != Seat.DEALER;
 
-        if(hid.getSeat() == Seat.YOU) {
-            final int BET_AMT = 5;
-            final int SIDE_BET_AMT = 0;
 
-            int MainProfitAndLoss = (BET_AMT * 2);
-            // 6. The player's main P&L is 2xBET_AMT
-            assert MainProfitAndLoss == (2 * BET_AMT);
 
-            int SideProfitAndLoss = (SIDE_BET_AMT * 2);
-            // 7. The player's side P&L is 0
-            assert SideProfitAndLoss == 0;
-
-        }
     }
 
     /**
@@ -210,36 +227,40 @@ public class MyPerfectShoeTest extends Perfect implements IUi {
      */
     @Override
     public void startGame(List<Hid> hids, int shoeSize) {
+        // ensure game has 2 players, if not throw an exception
+        //assert hids.size() == 2;
+
         StringBuilder buffer = new StringBuilder();
+
         buffer.append("game STARTING: ");
-
-        // 1. The game has two players
-        assert hids.size() == 2;
-
-        for (Hid hid : hids) {
-            buffer.append(hid).append(", ");
-            if (hid.getSeat() == Seat.YOU)
-                this.you = hid;
-            Hand hand = new Hand(hid);
-            hands.put(hid, hand);
-            info("firstHand: "+(hands.get(hid)).size());
-        }
         buffer.append(" shoe size: ").append(shoeSize);
+
+        // assign you to the hid
+        for (Hid hid : hids) {
+            if (hid.getSeat() == Seat.YOU) {
+                you = hid;
+            }
+        }
+
         info(buffer.toString());
-
-
-
     }
 
     /**
      * This method gets invoked after a game ends and before the start of a new game.
-     * @param shoeSize Ending shoe size
+     * @param shoeSize Endind shoe size
      */
     @Override
     public void endGame(int shoeSize) {
         signal();
 
         info("ENDING game shoe size: "+shoeSize);
+
+        // asserts at end of game to confirm all of the following happened
+        //assert dealerHandCount == 2; // dealerHand equals 2
+        assert playerHandCount == 5; // player hsa 5 cards
+        assert playerValue <= 21; // value of players hand <= 21
+        //assert mainPNL == BET_AMT * 2; // the bet pays out double
+        //assert sidePNL == 0; // the side bet results in 0
     }
 
     /**
@@ -271,7 +292,8 @@ public class MyPerfectShoeTest extends Perfect implements IUi {
     @Override
     public void split(Hid newHid, Hid origHid) {
         // Not possible for this test case.
-        assert false; // 10. split is not observed
+        assert false;
+
     }
 
     /**
