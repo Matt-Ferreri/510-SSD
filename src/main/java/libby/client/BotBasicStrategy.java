@@ -28,14 +28,13 @@ import charlie.card.Hand;
             if (value >= 12) {
                 return doSection1(hand, upCard);
             }
+            if (value == 4) {
+                // 2+2: Section 2 starts at 5 so we just hit
+                return Play.HIT;
+            }
             // if the value is between 5 and 11, refer to section 2
             if (value >= 5 && value <= 11) {
                 return doSection2(hand, upCard);
-            }
-            // since 4 is not a value in any section, make a special case for it
-            if (value == 4) {
-                // 2+2: Section 2 starts at 5; use the 5–8 row (all hit in our tables).
-                return playSection2Row(3, upCard);
             }
             return Play.NONE;
         }
