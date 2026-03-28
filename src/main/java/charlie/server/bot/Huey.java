@@ -14,6 +14,7 @@ import java.util.List;
 /**
  * this is the huey bot that uses BotBasicStrategy
  * it only talks to the dealer from play(Hid) on a worker thread, one dealer request per thread
+ * it follows the instructions from Appendix 1
  */
 public class Huey implements IBot, Runnable {
 
