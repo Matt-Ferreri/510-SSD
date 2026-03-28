@@ -1,14 +1,4 @@
-/*
- * Copyright (c) 2026 Hexant, LLC
- *
- * THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND,
- * EXPRESS OR IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF
- * MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE, AND
- * NONINFRINGEMENT. IN NO EVENT SHALL THE AUTHORS OR COPYRIGHT HOLDERS BE
- * LIABLE FOR ANY CLAIM, DAMAGES OR OTHER LIABILITY, WHETHER IN AN ACTION
- * OF CONTRACT, TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION
- * WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
- */
+
 
 package charlie.server.bot;
 
@@ -85,14 +75,22 @@ public class Huey implements IBot, Runnable {
         if (!isMySeat(hid)) {
             return;
         }
-        new Thread(() -> {
+        Thread worker = new Thread(() -> {
             try {
                 humanDelay();
                 executePlay(hid);
             } catch (InterruptedException e) {
                 Thread.currentThread().interrupt();
             }
-        }).start();
+        });
+        worker.start();
+        try {
+            // Wait until the worker finishes its Dealer request so the round cannot stall
+            // when executePlay would otherwise return without hit/stay/double.
+            worker.join();
+        } catch (InterruptedException e) {
+            Thread.currentThread().interrupt();
+        }
     }
 
     private void executePlay(Hid hid) {
@@ -111,16 +109,16 @@ public class Huey implements IBot, Runnable {
             if (h.isBroke() || h.isBlackjack() || h.isCharlie()) {
                 return;
             }
-            Card up = dealerUpCard;
-            if (up == null) {
-                return;
-            }
             if (h.size() < 2) {
                 return;
             }
 
-            Play p = strategy.getPlay(h, up);
+            Card up = dealerUpCard;
+            Play p = (up == null) ? Play.NONE : strategy.getPlay(h, up);
             if (p == Play.NONE) {
+                // Must still advance the hand or the table can hang before the human's turn.
+                d.stay(this, hid);
+                handFinished = true;
                 return;
             }
             if (p == Play.DOUBLE_DOWN && h.size() != 2) {
@@ -140,6 +138,8 @@ public class Huey implements IBot, Runnable {
                     d.hit(this, hid);
                     break;
                 default:
+                    d.stay(this, hid);
+                    handFinished = true;
                     break;
             }
         }

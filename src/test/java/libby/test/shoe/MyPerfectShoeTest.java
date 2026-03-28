@@ -63,7 +63,7 @@ public class MyPerfectShoeTest extends Perfect implements IUi {
         bet(BET_AMT,SIDE_BET_AMT);
         info("bet amt: "+BET_AMT+", side bet: "+SIDE_BET_AMT);
 
-        ////////// All test logic at this point done by IUi implementation.
+        //All test logic at this point done by IUi implementation.
 
         // Wait for dealer to call end of game.
         assert await(20000);
@@ -131,7 +131,7 @@ public class MyPerfectShoeTest extends Perfect implements IUi {
      */
     @Override
     public void bust(Hid hid) {
-        // Possible if You or Dealer breaks but it will be one or the other.
+        // Possible if You or Dealer breaks, but it will be one or the other.
         info("BREAK: "+hid);
 
         // Not possible for this test case.
