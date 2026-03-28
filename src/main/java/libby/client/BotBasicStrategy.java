@@ -38,11 +38,8 @@ import charlie.card.Hand;
             }
             return Play.NONE;
         }
-        /**
-         * Looks up a play from section2Rules for a given row vs. dealer up-card.
-         *
-         * @param rowIndex 0 = 11, 1 = 10, 2 = 9, 3 = 5–8
-         */
+        //Looks up a play from section2Rules for a given row vs. dealer up-card.
+         
         private Play playSection2Row(int rowIndex, Card upCard) {
             Play[] row = section2Rules[rowIndex];
             int colIndex = upCard.getRank() - 2;
