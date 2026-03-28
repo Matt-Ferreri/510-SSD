@@ -5,3 +5,8 @@ charlie.client.courier -1:8001
 #charlie.sounds off
 charlie.debug false
 #charlie.shoe charlie.shoe.Shoe01
+charlie.bot.huey charlie.server.bot.Huey
+charlie.bot.dewey charlie.server.bot.Dewey
+
+
+
