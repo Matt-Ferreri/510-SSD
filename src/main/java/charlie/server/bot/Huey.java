@@ -1,5 +1,3 @@
-
-
 package charlie.server.bot;
 
 import charlie.card.Card;
@@ -14,8 +12,8 @@ import libby.client.BotBasicStrategy;
 import java.util.List;
 
 /**
- * Table bot driven by  BotBasicStrategy. Responds to the dealer only from
- * play(Hid) on a short-lived worker thread (one dealer request per thread).
+ * this is the huey bot that uses BotBasicStrategy
+ * it only talks to the dealer from play(Hid) on a worker thread, one dealer request per thread
  */
 public class Huey implements IBot, Runnable {
 
@@ -33,7 +31,7 @@ public class Huey implements IBot, Runnable {
 
     @Override
     public void run() {
-        // Gameplay is driven by dealer callbacks on the house thread.
+        // nothing here on purpose, the dealer calls the ibot methods when stuff happens
     }
 
     @Override
@@ -60,11 +58,12 @@ public class Huey implements IBot, Runnable {
 
     @Override
     public void endGame(int shoeSize) {
-        // Outcome already delivered via bust/win/lose/etc.; state resets next startGame.
+        // startGame will reset flags next hand
     }
 
     @Override
     public void deal(Hid hid, Card card, int[] handValues) {
+        // first card to the dealer seat is the up card for basic strategy
         if (hid.getSeat() == Seat.DEALER && dealerUpCard == null) {
             dealerUpCard = card;
         }
@@ -75,22 +74,16 @@ public class Huey implements IBot, Runnable {
         if (!isMySeat(hid)) {
             return;
         }
-        Thread worker = new Thread(() -> {
+        new Thread(() -> {
             try {
                 humanDelay();
                 executePlay(hid);
             } catch (InterruptedException e) {
                 Thread.currentThread().interrupt();
             }
-        });
-        worker.start();
-        try {
-            // Wait until the worker finishes its Dealer request so the round cannot stall
-            // when executePlay would otherwise return without hit/stay/double.
-            worker.join();
-        } catch (InterruptedException e) {
-            Thread.currentThread().interrupt();
-        }
+        }).start();
+        // dont join() the worker — if the house thread waits here and the worker calls dealer.hit/stay,
+        // charlie can deadlock and nothing moves
     }
 
     private void executePlay(Hid hid) {
@@ -116,11 +109,12 @@ public class Huey implements IBot, Runnable {
             Card up = dealerUpCard;
             Play p = (up == null) ? Play.NONE : strategy.getPlay(h, up);
             if (p == Play.NONE) {
-                // Must still advance the hand or the table can hang before the human's turn.
+                // still have to call stay or the round can get stuck before it gets to the human
                 d.stay(this, hid);
                 handFinished = true;
                 return;
             }
+            // double only works with 2 cards so fall back to hit
             if (p == Play.DOUBLE_DOWN && h.size() != 2) {
                 p = Play.HIT;
             }
@@ -149,7 +143,7 @@ public class Huey implements IBot, Runnable {
         return seat != null && hid.getSeat() == seat;
     }
 
-    /** Random delay with mean ~2.5 s (uniform 2000–3000 ms). */
+    // appendix 1 wants about 2.5 sec on average so use 2000–3000 ms
     private static void humanDelay() throws InterruptedException {
         int ms = DELAY_MS_MIN + (int) (Math.random() * DELAY_MS_SPAN);
         Thread.sleep(ms);
