@@ -4,8 +4,9 @@ charlie.server.realplayer 127.0.0.1:8501
 charlie.client.courier -1:8001
 #charlie.sounds off
 charlie.debug false
-# use one bot shoe at a time for playtesting
-charlie.shoe libby.plugin.BotShoe01
+# use one bot shoe at a time for playtesting (set this in C:\tmp\Charlie\charlie.props instead,
+# so it doesn't override the shoe used by automated tests in this project)
+#charlie.shoe libby.plugin.BotShoe01
 #charlie.shoe libby.plugin.BotShoe02
 #charlie.shoe libby.plugin.BotShoe03
 #charlie.shoe libby.plugin.BotShoe04
