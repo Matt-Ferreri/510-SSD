@@ -25,6 +25,7 @@ public class Huey implements IBot, Runnable {
     private volatile Card dealerUpCard;
     private volatile boolean handFinished;
     private volatile boolean workerRunning = false;
+    private volatile boolean pendingPlay = false;
 
     @Override
     public void run() {
@@ -52,6 +53,7 @@ public class Huey implements IBot, Runnable {
         dealerUpCard = null;
         handFinished = false;
         workerRunning = false;
+        pendingPlay = false;
     }
 
     @Override
@@ -74,10 +76,24 @@ public class Huey implements IBot, Runnable {
             return;
         }
 
-        // After a successful hit, Charlie does not call play() again for non-terminal hands.
-        // Start the next decision from deal() when the new card belongs to this bot.
+        // after a hit, charlie does not call play() again if the hand is still alive
+        // so if this card is for huey, we have to queue up the next move ourselves
         if (!h.isBroke() && !h.isBlackjack() && !h.isCharlie() && h.getValue() < 21) {
-            startWorker(hid);
+            boolean startNow = false;
+            synchronized (playLock) {
+                if (handFinished) {
+                    return;
+                }
+                if (workerRunning) {
+                    pendingPlay = true;
+                } else {
+                    startNow = true;
+                }
+            }
+
+            if (startNow) {
+                startWorker(hid);
+            }
         }
     }
 
@@ -95,16 +111,31 @@ public class Huey implements IBot, Runnable {
                 return;
             }
             workerRunning = true;
+            pendingPlay = false;
         }
 
         new Thread(() -> {
+            boolean runAgain = false;
             try {
                 humanDelay();
                 executePlay(hid);
             } catch (InterruptedException e) {
                 Thread.currentThread().interrupt();
             } finally {
-                workerRunning = false;
+                synchronized (playLock) {
+                    workerRunning = false;
+
+                    // if a hit came in while this worker was still finishing,
+                    // save that next move and start a new worker now
+                    if (pendingPlay && !handFinished) {
+                        pendingPlay = false;
+                        runAgain = true;
+                    }
+                }
+            }
+
+            if (runAgain) {
+                startWorker(hid);
             }
         }).start();
     }

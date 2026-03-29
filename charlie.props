@@ -4,7 +4,13 @@ charlie.server.realplayer 127.0.0.1:8501
 charlie.client.courier -1:8001
 #charlie.sounds off
 charlie.debug false
-#charlie.shoe charlie.shoe.Shoe01
+# use one bot shoe at a time for playtesting
+charlie.shoe libby.plugin.BotShoe01
+#charlie.shoe libby.plugin.BotShoe02
+#charlie.shoe libby.plugin.BotShoe03
+#charlie.shoe libby.plugin.BotShoe04
+#charlie.shoe libby.plugin.BotShoe05
+#charlie.shoe libby.plugin.BotShoe06
 charlie.advisor libby.client.Advisor
 charlie.bot.huey charlie.server.bot.Huey
 charlie.bot.dewey charlie.server.bot.Dewey
