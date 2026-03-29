@@ -11,43 +11,46 @@ import charlie.card.Hand;
     public class BotBasicStrategy extends BasicStrategy {
         @Override
         public Play getPlay(Hand hand, Card upCard) {
-            // if the play is not a split, then do the play
-            Play play = super.getPlay(hand, upCard);
+            if (hand == null || upCard == null || hand.size() < 2) {
+                return Play.NONE;
+            }
+
+            Card card1 = hand.getCard(0);
+            Card card2 = hand.getCard(1);
+
+            Play play;
+            // case for pairs, refer to section 4
+            if (hand.isPair()) {
+                play = doSection4(hand, upCard);
+            } else if (hand.size() == 2 && (card1.getRank() == Card.ACE || card2.getRank() == Card.ACE)) {
+                play = Play.HIT;
+            } else if (hand.getValue() >= 5 && hand.getValue() < 12) {
+                play = doSection2(hand, upCard);
+            } else if (hand.getValue() >= 12) {
+                play = doSection1(hand, upCard);
+            } else {
+                play = Play.NONE;
+            }
+
             if (play != Play.SPLIT) {
                 return play;
             }
-            // if it is a split, do the correct action based on basic strategy other than split
-            return resolveWithoutSplit(hand, upCard);
-        }
-        /**
-         * Maps a pair that would split to a hit/stay/double using Sections 1 and 2 only.
-         */
-        private Play resolveWithoutSplit(Hand hand, Card upCard) {
+            // case for split
             int value = hand.getValue();
             // refer to section 1 if value is greater than 12
             if (value >= 12) {
                 return doSection1(hand, upCard);
             }
+            // case for 2+2
             if (value == 4) {
-                // 2+2: Section 2 starts at 5 so we just hit
                 return Play.HIT;
             }
-            // if the value is between 5 and 11, refer to section 2
+            // case for 5-11
             if (value >= 5 && value <= 11) {
                 return doSection2(hand, upCard);
             }
             return Play.NONE;
         }
-        //Looks up a play from section2Rules for a given row vs. dealer up-card.
-         
-        private Play playSection2Row(int rowIndex, Card upCard) {
-            Play[] row = section2Rules[rowIndex];
-            int colIndex = upCard.getRank() - 2;
-            if (upCard.isFace()) {
-                colIndex = 10 - 2;
-            } else if (upCard.isAce()) {
-                colIndex = 9;
-            }
-            return row[colIndex];
-        }
+
+    
     }
