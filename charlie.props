@@ -7,11 +7,8 @@ charlie.debug false
 # use one bot shoe at a time for playtesting (set this in C:\tmp\Charlie\charlie.props instead,
 # so it doesn't override the shoe used by automated tests in this project)
 #charlie.shoe libby.plugin.BotShoe01
-#charlie.shoe libby.plugin.BotShoe02
-#charlie.shoe libby.plugin.BotShoe03
-#charlie.shoe libby.plugin.BotShoe04
-#charlie.shoe libby.plugin.BotShoe05
-#charlie.shoe libby.plugin.BotShoe06
 charlie.advisor libby.client.Advisor
 charlie.bot.huey charlie.server.bot.Huey
 charlie.bot.dewey charlie.server.bot.Dewey
+
+
