@@ -21,7 +21,7 @@
  WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
  */
 
-package charlie.sidebet.rule;
+package libby.sidebet.rule;
 
 import charlie.card.Card;
 import charlie.card.Hand;
