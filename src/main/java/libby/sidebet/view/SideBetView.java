@@ -21,7 +21,7 @@
  WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
  */
 
-package charlie.sidebet.view;
+package libby.sidebet.view;
 
 import charlie.card.Hid;
 import charlie.plugin.ISideBetView;
