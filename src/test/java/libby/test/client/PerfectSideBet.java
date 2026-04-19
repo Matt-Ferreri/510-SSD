@@ -46,7 +46,7 @@ public class PerfectSideBet extends Perfect implements IUi {
             if(gameNumber == 1) {
                 System.out.println("gameNumber: " + gameNumber);
                 // set the bet amounts for game 1
-                BET_AMT = 5;
+                BET_AMT = 25;
                 SIDE_BET_AMT = 0;
 
                 bankroll = 1000;
