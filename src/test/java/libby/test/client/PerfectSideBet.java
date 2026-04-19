@@ -79,7 +79,7 @@ public class PerfectSideBet extends Perfect implements IUi {
 
             if(gameNumber == 3) {
                 System.out.println("gameNumber: " + gameNumber);
-                // set the bet amounts for game 2
+                // set the bet amounts for game 3
                 BET_AMT = 25;
                 SIDE_BET_AMT = 10;
 
@@ -93,7 +93,7 @@ public class PerfectSideBet extends Perfect implements IUi {
 
             if(gameNumber == 4) {
                 System.out.println("gameNumber: " + gameNumber);
-                // set the bet amounts for game 2
+                // set the bet amounts for game 4
                 BET_AMT = 25;
                 SIDE_BET_AMT = 10;
 
@@ -107,7 +107,7 @@ public class PerfectSideBet extends Perfect implements IUi {
 
             if(gameNumber == 5) {
                 System.out.println("gameNumber: " + gameNumber);
-                // set the bet amounts for game 2
+                // set the bet amounts for game 5
                 BET_AMT = 25;
                 SIDE_BET_AMT = 10;
 
@@ -121,7 +121,7 @@ public class PerfectSideBet extends Perfect implements IUi {
 
             if(gameNumber == 6) {
                 System.out.println("gameNumber: " + gameNumber);
-                // set the bet amounts for game 2
+                // set the bet amounts for game 6
                 BET_AMT = 25;
                 SIDE_BET_AMT = 10;
 
@@ -135,7 +135,7 @@ public class PerfectSideBet extends Perfect implements IUi {
 
             if(gameNumber == 7) {
                 System.out.println("gameNumber: " + gameNumber);
-                // set the bet amounts for game 2
+                // set the bet amounts for game 7
                 BET_AMT = 25;
                 SIDE_BET_AMT = 10;
 
@@ -149,7 +149,7 @@ public class PerfectSideBet extends Perfect implements IUi {
 
             if(gameNumber == 8) {
                 System.out.println("gameNumber: " + gameNumber);
-                // set the bet amounts for game 2
+                // set the bet amounts for game 8
                 BET_AMT = 25;
                 SIDE_BET_AMT = 10;
 
@@ -163,7 +163,7 @@ public class PerfectSideBet extends Perfect implements IUi {
 
             if(gameNumber == 9) {
                 System.out.println("gameNumber: " + gameNumber);
-                // set the bet amounts for game 2
+                // set the bet amounts for game 9
                 BET_AMT = 25;
                 SIDE_BET_AMT = 10;
 
@@ -177,7 +177,7 @@ public class PerfectSideBet extends Perfect implements IUi {
 
             if(gameNumber == 10) {
                 System.out.println("gameNumber: " + gameNumber);
-                // set the bet amounts for game 2
+                // set the bet amounts for game 10
                 BET_AMT = 25;
                 SIDE_BET_AMT = 10;
 
