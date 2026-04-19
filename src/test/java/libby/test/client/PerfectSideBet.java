@@ -35,15 +35,18 @@ public class PerfectSideBet extends Perfect implements IUi {
         // Starts the server and logs in using only defaults
         go(this);
 
-        //bankroll = 1000;
+        bankroll = 1000;
 
-        for(; gameNumber <= 10; gameNumber++){
-            // set the bet amounts for game 0
+        BET_AMT = 5;
+        SIDE_BET_AMT = 0;
+
+        /*for(; gameNumber <= 10; gameNumber++){
+            // set the bet amounts for game 1
             BET_AMT = 5;
             SIDE_BET_AMT = 0;
 
             bankroll = 1000;
-        }
+        }*/
 
         // Now that the game server is ready, to start a game, we just need to
         // send in a bet which in the GUI is like pressing DEAL.
