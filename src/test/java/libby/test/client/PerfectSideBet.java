@@ -150,6 +150,8 @@ public class PerfectSideBet extends Perfect implements IUi {
             assert hid.getSideAmt() == 3 * 10;
             // bankroll = 1055
             assert bankroll == (25 + 30);
+        } else {
+            assert false;
         }
 
         if (gameNumber == 3){
@@ -158,6 +160,8 @@ public class PerfectSideBet extends Perfect implements IUi {
             assert hid.getSideAmt() == -10;
             // bankroll = 1070
             assert bankroll == (25 - 10);
+        } else {
+            assert false;
         }
 
         if (gameNumber == 6){
@@ -166,6 +170,8 @@ public class PerfectSideBet extends Perfect implements IUi {
             assert hid.getSideAmt() == 25 * 10;
             // bankroll = 1315
             assert bankroll == (25 + (25 * 10));
+        } else {
+            assert false;
         }
 
         if (gameNumber == 7){
@@ -174,6 +180,8 @@ public class PerfectSideBet extends Perfect implements IUi {
             assert hid.getSideAmt() == -10;
             // bankroll = 1330
             assert bankroll == (25 - 10);
+        } else {
+            assert false;
         }
 
         if (gameNumber == 8){
@@ -182,6 +190,8 @@ public class PerfectSideBet extends Perfect implements IUi {
             assert hid.getSideAmt() == 10;
             // bankroll = 1365
             assert bankroll == (25 + 10);
+        } else {
+            assert false;
         }
 
         if (gameNumber == 9){
@@ -190,6 +200,8 @@ public class PerfectSideBet extends Perfect implements IUi {
             assert hid.getSideAmt() == 3 * 10;
             // bankroll = 1420
             assert bankroll == (25 + 30);
+        } else {
+            assert false;
         }
     }
 
@@ -208,6 +220,8 @@ public class PerfectSideBet extends Perfect implements IUi {
             assert hid.getSideAmt() == 3 * 10;
             // bankroll = 1075
             assert bankroll == (-25 + 30);
+        } else {
+            assert false;
         }
 
         if (gameNumber == 5){
@@ -216,6 +230,8 @@ public class PerfectSideBet extends Perfect implements IUi {
             assert hid.getSideAmt() == -10;
             // bankroll = 1040
             assert bankroll == (-25 - 10);
+        } else {
+            assert false;
         }
     }
 
