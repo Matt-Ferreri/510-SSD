@@ -35,31 +35,169 @@ public class PerfectSideBet extends Perfect implements IUi {
         // Starts the server and logs in using only defaults
         go(this);
 
+        /*
         bankroll = 1000;
 
         BET_AMT = 5;
         SIDE_BET_AMT = 0;
+        */
 
-        /*for(; gameNumber <= 10; gameNumber++){
-            // set the bet amounts for game 1
-            BET_AMT = 5;
-            SIDE_BET_AMT = 0;
+        for(; gameNumber <= 10; gameNumber++){
+            if(gameNumber == 1) {
+                System.out.println("gameNumber: " + gameNumber);
+                // set the bet amounts for game 1
+                BET_AMT = 5;
+                SIDE_BET_AMT = 0;
 
-            bankroll = 1000;
-        }*/
+                bankroll = 1000;
 
-        // Now that the game server is ready, to start a game, we just need to
-        // send in a bet which in the GUI is like pressing DEAL.
-        bet(BET_AMT,SIDE_BET_AMT);
-        info("bet amt: "+BET_AMT+", side bet: "+SIDE_BET_AMT);
+                // Now that the game server is ready, to start a game, we just need to
+                // send in a bet which in the GUI is like pressing DEAL.
+                bet(BET_AMT,SIDE_BET_AMT);
+                info("bet amt: "+BET_AMT+", side bet: "+SIDE_BET_AMT);
+
+                // Wait for dealer to call end of game.
+                //assert await(20000);
+            }
+
+            if(gameNumber == 2) {
+                System.out.println("gameNumber: " + gameNumber);
+                // set the bet amounts for game 2
+                BET_AMT = 25;
+                SIDE_BET_AMT = 10;
+
+                bankroll += 25 + 30;
+
+                // Now that the game server is ready, to start a game, we just need to
+                // send in a bet which in the GUI is like pressing DEAL.
+                bet(BET_AMT,SIDE_BET_AMT);
+                info("bet amt: "+BET_AMT+", side bet: "+SIDE_BET_AMT);
+
+                // Wait for dealer to call end of game.
+                //assert await(20000);
+            }
+
+            if(gameNumber == 3) {
+                System.out.println("gameNumber: " + gameNumber);
+                // set the bet amounts for game 2
+                BET_AMT = 25;
+                SIDE_BET_AMT = 10;
+
+                bankroll += (25 - 10);
+
+                // Now that the game server is ready, to start a game, we just need to
+                // send in a bet which in the GUI is like pressing DEAL.
+                bet(BET_AMT,SIDE_BET_AMT);
+                info("bet amt: "+BET_AMT+", side bet: "+SIDE_BET_AMT);
+            }
+
+            if(gameNumber == 4) {
+                System.out.println("gameNumber: " + gameNumber);
+                // set the bet amounts for game 2
+                BET_AMT = 25;
+                SIDE_BET_AMT = 10;
+
+                bankroll += (-25 + 30);
+
+                // Now that the game server is ready, to start a game, we just need to
+                // send in a bet which in the GUI is like pressing DEAL.
+                bet(BET_AMT,SIDE_BET_AMT);
+                info("bet amt: "+BET_AMT+", side bet: "+SIDE_BET_AMT);
+            }
+
+            if(gameNumber == 5) {
+                System.out.println("gameNumber: " + gameNumber);
+                // set the bet amounts for game 2
+                BET_AMT = 25;
+                SIDE_BET_AMT = 10;
+
+                bankroll += (-25 - 10);
+
+                // Now that the game server is ready, to start a game, we just need to
+                // send in a bet which in the GUI is like pressing DEAL.
+                bet(BET_AMT,SIDE_BET_AMT);
+                info("bet amt: "+BET_AMT+", side bet: "+SIDE_BET_AMT);
+            }
+
+            if(gameNumber == 6) {
+                System.out.println("gameNumber: " + gameNumber);
+                // set the bet amounts for game 2
+                BET_AMT = 25;
+                SIDE_BET_AMT = 10;
+
+                bankroll += (25 + (25 * 10));
+
+                // Now that the game server is ready, to start a game, we just need to
+                // send in a bet which in the GUI is like pressing DEAL.
+                bet(BET_AMT,SIDE_BET_AMT);
+                info("bet amt: "+BET_AMT+", side bet: "+SIDE_BET_AMT);
+            }
+
+            if(gameNumber == 7) {
+                System.out.println("gameNumber: " + gameNumber);
+                // set the bet amounts for game 2
+                BET_AMT = 25;
+                SIDE_BET_AMT = 10;
+
+                bankroll += (25 - 10);
+
+                // Now that the game server is ready, to start a game, we just need to
+                // send in a bet which in the GUI is like pressing DEAL.
+                bet(BET_AMT,SIDE_BET_AMT);
+                info("bet amt: "+BET_AMT+", side bet: "+SIDE_BET_AMT);
+            }
+
+            if(gameNumber == 8) {
+                System.out.println("gameNumber: " + gameNumber);
+                // set the bet amounts for game 2
+                BET_AMT = 25;
+                SIDE_BET_AMT = 10;
+
+                bankroll += (25 + 10);
+
+                // Now that the game server is ready, to start a game, we just need to
+                // send in a bet which in the GUI is like pressing DEAL.
+                bet(BET_AMT,SIDE_BET_AMT);
+                info("bet amt: "+BET_AMT+", side bet: "+SIDE_BET_AMT);
+            }
+
+            if(gameNumber == 9) {
+                System.out.println("gameNumber: " + gameNumber);
+                // set the bet amounts for game 2
+                BET_AMT = 25;
+                SIDE_BET_AMT = 10;
+
+                bankroll += (25 + 30);
+
+                // Now that the game server is ready, to start a game, we just need to
+                // send in a bet which in the GUI is like pressing DEAL.
+                bet(BET_AMT,SIDE_BET_AMT);
+                info("bet amt: "+BET_AMT+", side bet: "+SIDE_BET_AMT);
+            }
+
+            if(gameNumber == 10) {
+                System.out.println("gameNumber: " + gameNumber);
+                // set the bet amounts for game 2
+                BET_AMT = 25;
+                SIDE_BET_AMT = 10;
+
+                bankroll += (25 - 10);
+
+                // Now that the game server is ready, to start a game, we just need to
+                // send in a bet which in the GUI is like pressing DEAL.
+                bet(BET_AMT,SIDE_BET_AMT);
+                info("bet amt: "+BET_AMT+", side bet: "+SIDE_BET_AMT);
+            }
+
+        }
 
         //All test logic at this point done by IUi implementation.
-
         // Wait for dealer to call end of game.
         assert await(20000);
 
         // End of scope closes sockets which shuts down client and server.
         info("DONE !");
+
     }
 
 
@@ -107,8 +245,8 @@ public class PerfectSideBet extends Perfect implements IUi {
         if (gameNumber == 1){
             assert hid.getSeat() == Seat.YOU;
             assert hid.getAmt() == 0 && mainPNL == 0;
-            // bankroll = 1000
             assert hid.getSideAmt() == 0;
+            // bankroll = 1000
         } else {
             assert false;
         }
