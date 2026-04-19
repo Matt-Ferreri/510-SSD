@@ -71,29 +71,6 @@ public class PerfectSideBet extends Perfect implements IUi {
     @Override
     public void deal(Hid hid, Card card, int[] handValues) {
         info("DEAL: "+hid+" card: "+card+" hand values: "+handValues[0]+", "+handValues[1]);
-
-        // if hand id equals YOU seat, get a card and increase cards in hand
-        if (hid.getSeat() == Seat.YOU) {
-            // ensures actual card is being dealt
-            if (card != null) {
-                playerHandCount++;
-                playerValue = handValues[0];
-            }
-        }
-
-        // else it equals the dealer, so increase card counts
-        else {
-            // ensures actual card is being dealt
-            if (card != null) {
-                dealerHandCount++;
-            }
-        }
-
-        // if myTurn is true and hid.seat = YOU then play
-        if (myTurn && hid.equals(you)) {
-            //when it's our turn, play
-            play(hid);
-        }
     }
 
     /**
