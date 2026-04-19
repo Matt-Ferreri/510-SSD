@@ -66,7 +66,7 @@ public class PerfectSideBet extends Perfect implements IUi {
                 BET_AMT = 25;
                 SIDE_BET_AMT = 10;
 
-                bankroll += 25 + 30;
+                bankroll += (25 + 30);
 
                 // Now that the game server is ready, to start a game, we just need to
                 // send in a bet which in the GUI is like pressing DEAL.
