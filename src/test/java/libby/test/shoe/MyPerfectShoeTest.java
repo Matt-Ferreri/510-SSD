@@ -257,8 +257,8 @@ public class MyPerfectShoeTest extends Perfect implements IUi {
 
         // asserts at end of game to confirm all of the following happened
         //assert dealerHandCount == 2; // dealerHand equals 2
-        //assert playerHandCount == 5; // player hsa 5 cards
-        //assert playerValue <= 21; // value of players hand <= 21
+        assert playerHandCount == 5; // player hsa 5 cards
+        assert playerValue <= 21; // value of players hand <= 21
         //assert mainPNL == BET_AMT * 2; // the bet pays out double
         //assert sidePNL == 0; // the side bet results in 0
     }

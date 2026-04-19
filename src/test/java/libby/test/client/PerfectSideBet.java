@@ -12,15 +12,15 @@ import java.util.List;
 public class PerfectSideBet extends Perfect implements IUi {
     Hid you;
 
-    int gameNumber = 1;
-    double bankroll = 1000;
     boolean waitingToStayAfterHit = false;
+    double bankroll;
+    int gameNumber;
 
     public void test() throws Exception {
         // launch the server and login
         go(this);
 
-        // start the bankroll and 1000 and game number 1
+        // start the bankroll and 1000 and gameNumber = 1
         bankroll = 1000;
         gameNumber = 1;
 
@@ -28,7 +28,7 @@ public class PerfectSideBet extends Perfect implements IUi {
         bet(25, 0);
         info("game 1 bet amt: 25, side bet: 0");
 
-        // gave it a minute, it was timing out on game 7 with the 20 second timeout
+        // 20 second timeout is too short, so we use 60 seconds
         assert await(60000);
 
         info("DONE !");
@@ -163,7 +163,7 @@ public class PerfectSideBet extends Perfect implements IUi {
         assert hid.getSeat() != Seat.YOU : "unexpected player bust at game " + gameNumber;
     }
 
-    // unexpected results for blackjack, split, or charlie
+    // unexpected results for blackjack, split, or charlie, all assert false
     @Override
     public void blackjack(Hid hid) {
         info("BLACKJACK: " + hid);
