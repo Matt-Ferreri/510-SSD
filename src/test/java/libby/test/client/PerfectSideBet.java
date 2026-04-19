@@ -12,453 +12,213 @@ import java.util.List;
 public class PerfectSideBet extends Perfect implements IUi {
     Hid you;
 
-    boolean myTurn = false; // set myTurn to false
-
-    // keep track of number of cards in hand
-    int playerHandCount = 0;
-    int dealerHandCount = 0;
-    // keep track of value of players hand
-    int playerValue = 0;
-
     int gameNumber = 1;
-
-    double bankroll = 0;
-
-    int BET_AMT = 0;
-    int SIDE_BET_AMT = 0;
-
-    // declare the variables for main and side PNL
-    double mainPNL;
+    double bankroll = 1000;
+    boolean waitingToStayAfterHit = false;
 
     public void test() throws Exception {
-
-        // Starts the server and logs in using only defaults
+        // launch the server and login
         go(this);
 
-        /*
+        // start the bankroll and 1000 and game number 1
         bankroll = 1000;
+        gameNumber = 1;
 
-        BET_AMT = 5;
-        SIDE_BET_AMT = 0;
-        */
+        // Start only game 1 here. The remaining games are chained from endGame().
+        bet(25, 0);
+        info("game 1 bet amt: 25, side bet: 0");
 
-        for(; gameNumber <= 10; gameNumber++){
-            if(gameNumber == 1) {
-                System.out.println("gameNumber: " + gameNumber);
-                // set the bet amounts for game 1
-                BET_AMT = 25;
-                SIDE_BET_AMT = 0;
+        // gave it a minute, it was timing out on game 7 with the 20 second timeout
+        assert await(60000);
 
-                bankroll = 1000;
-
-                // Now that the game server is ready, to start a game, we just need to
-                // send in a bet which in the GUI is like pressing DEAL.
-                bet(BET_AMT,SIDE_BET_AMT);
-                info("bet amt: "+BET_AMT+", side bet: "+SIDE_BET_AMT);
-
-                // Wait for dealer to call end of game.
-                //assert await(20000);
-            }
-
-            if(gameNumber == 2) {
-                System.out.println("gameNumber: " + gameNumber);
-                // set the bet amounts for game 2
-                BET_AMT = 25;
-                SIDE_BET_AMT = 10;
-
-                bankroll += (25 + 30);
-
-                // Now that the game server is ready, to start a game, we just need to
-                // send in a bet which in the GUI is like pressing DEAL.
-                bet(BET_AMT,SIDE_BET_AMT);
-                info("bet amt: "+BET_AMT+", side bet: "+SIDE_BET_AMT);
-
-                // Wait for dealer to call end of game.
-                //assert await(20000);
-            }
-
-            if(gameNumber == 3) {
-                System.out.println("gameNumber: " + gameNumber);
-                // set the bet amounts for game 3
-                BET_AMT = 25;
-                SIDE_BET_AMT = 10;
-
-                bankroll += (25 - 10);
-
-                // Now that the game server is ready, to start a game, we just need to
-                // send in a bet which in the GUI is like pressing DEAL.
-                bet(BET_AMT,SIDE_BET_AMT);
-                info("bet amt: "+BET_AMT+", side bet: "+SIDE_BET_AMT);
-            }
-
-            if(gameNumber == 4) {
-                System.out.println("gameNumber: " + gameNumber);
-                // set the bet amounts for game 4
-                BET_AMT = 25;
-                SIDE_BET_AMT = 10;
-
-                bankroll += (-25 + 30);
-
-                // Now that the game server is ready, to start a game, we just need to
-                // send in a bet which in the GUI is like pressing DEAL.
-                bet(BET_AMT,SIDE_BET_AMT);
-                info("bet amt: "+BET_AMT+", side bet: "+SIDE_BET_AMT);
-            }
-
-            if(gameNumber == 5) {
-                System.out.println("gameNumber: " + gameNumber);
-                // set the bet amounts for game 5
-                BET_AMT = 25;
-                SIDE_BET_AMT = 10;
-
-                bankroll += (-25 - 10);
-
-                // Now that the game server is ready, to start a game, we just need to
-                // send in a bet which in the GUI is like pressing DEAL.
-                bet(BET_AMT,SIDE_BET_AMT);
-                info("bet amt: "+BET_AMT+", side bet: "+SIDE_BET_AMT);
-            }
-
-            if(gameNumber == 6) {
-                System.out.println("gameNumber: " + gameNumber);
-                // set the bet amounts for game 6
-                BET_AMT = 25;
-                SIDE_BET_AMT = 10;
-
-                bankroll += (25 + (25 * 10));
-
-                // Now that the game server is ready, to start a game, we just need to
-                // send in a bet which in the GUI is like pressing DEAL.
-                bet(BET_AMT,SIDE_BET_AMT);
-                info("bet amt: "+BET_AMT+", side bet: "+SIDE_BET_AMT);
-            }
-
-            if(gameNumber == 7) {
-                System.out.println("gameNumber: " + gameNumber);
-                // set the bet amounts for game 7
-                BET_AMT = 25;
-                SIDE_BET_AMT = 10;
-
-                bankroll += (25 - 10);
-
-                // Now that the game server is ready, to start a game, we just need to
-                // send in a bet which in the GUI is like pressing DEAL.
-                bet(BET_AMT,SIDE_BET_AMT);
-                info("bet amt: "+BET_AMT+", side bet: "+SIDE_BET_AMT);
-            }
-
-            if(gameNumber == 8) {
-                System.out.println("gameNumber: " + gameNumber);
-                // set the bet amounts for game 8
-                BET_AMT = 25;
-                SIDE_BET_AMT = 10;
-
-                bankroll += (25 + 10);
-
-                // Now that the game server is ready, to start a game, we just need to
-                // send in a bet which in the GUI is like pressing DEAL.
-                bet(BET_AMT,SIDE_BET_AMT);
-                info("bet amt: "+BET_AMT+", side bet: "+SIDE_BET_AMT);
-            }
-
-            if(gameNumber == 9) {
-                System.out.println("gameNumber: " + gameNumber);
-                // set the bet amounts for game 9
-                BET_AMT = 25;
-                SIDE_BET_AMT = 10;
-
-                bankroll += (25 + 30);
-
-                // Now that the game server is ready, to start a game, we just need to
-                // send in a bet which in the GUI is like pressing DEAL.
-                bet(BET_AMT,SIDE_BET_AMT);
-                info("bet amt: "+BET_AMT+", side bet: "+SIDE_BET_AMT);
-            }
-
-            if(gameNumber == 10) {
-                System.out.println("gameNumber: " + gameNumber);
-                // set the bet amounts for game 10
-                BET_AMT = 25;
-                SIDE_BET_AMT = 10;
-
-                bankroll += (25 - 10);
-
-                // Now that the game server is ready, to start a game, we just need to
-                // send in a bet which in the GUI is like pressing DEAL.
-                bet(BET_AMT,SIDE_BET_AMT);
-                info("bet amt: "+BET_AMT+", side bet: "+SIDE_BET_AMT);
-            }
-
-        }
-
-        //All test logic at this point done by IUi implementation.
-        // Wait for dealer to call end of game.
-        assert await(20000);
-
-        // End of scope closes sockets which shuts down client and server.
         info("DONE !");
-
     }
-
-
-    /**
-     * This method gets invoked whenever a card is dealt.
-     * @param hid Target hand
-     * @param card Card
-     * @param handValues Hand value and soft value
-     */
 
     @Override
     public void deal(Hid hid, Card card, int[] handValues) {
-        info("DEAL: "+hid+" card: "+card+" hand values: "+handValues[0]+", "+handValues[1]);
+        info("DEAL: " + hid + " card: " + card + " hand values: " + handValues[0] + ", " + handValues[1]);
+
+        // For games 1-5, we hit once and then explicitly stay after that hit card arrives.
+        // Without this, the test can stall waiting for a second play callback that may never come.
+        if (hid.getSeat() == Seat.YOU && waitingToStayAfterHit) {
+            waitingToStayAfterHit = false;
+            stay(you);
+        }
     }
 
     /**
-     * This method gets invoked only once whenever the turn changes.
-     * @param hid New hand's turn
+     * Games 1-5: player has 16, must hit to reach 19.
+     * Games 6-7: player has 20, stay.
+     * Games 8-10: player has 13 or 14, stay because the dealer busts.
      */
     @Override
     public void play(Hid hid) {
-        // if the turn is not mine, set myTurn as false and return
-        if (hid.getSeat() != Seat.YOU) {
-            myTurn = false;
+        // We receive callbacks for dealer/player hands; only act on our own turn.
+        if (hid.getSeat() != Seat.YOU)
             return;
-        }
 
-        // When it's our turn, set myTurn = true and invoke hit
-        if(hid.getSeat() == Seat.YOU) {
-            myTurn = true;
+        // if the game number is between 1 and 5, hit once then stay from deal().
+        if (gameNumber >= 1 && gameNumber <= 5) {
+            hit(you);
+            waitingToStayAfterHit = true;
+        } else {
+            stay(you);
         }
     }
 
-    /**
-     * This method gets invoke for a hand that pushes, ie, has same value as dealer's hand.
-     * @param hid Target hand
-     */
     @Override
     public void push(Hid hid) {
-        System.out.println("HERE");
-        // Possible if there's a push.
-        info("PUSH: "+hid);
+        // ensure the hid is the player's
+        assert hid.getSeat() == Seat.YOU;
 
-        // game 1 outcome is a push
-        if (gameNumber == 1){
-            assert hid.getSeat() == Seat.YOU;
-            assert hid.getAmt() == 0 && mainPNL == 0;
+        info("PUSH: " + hid);
+
+        if (gameNumber == 1) {
+            // Game 1 is a push with nothing gained or lost
+            assert hid.getAmt() == 0;
             assert hid.getSideAmt() == 0;
-            // bankroll = 1000
         } else {
-            assert false;
+            assert false : "unexpected push at game " + gameNumber;
         }
     }
 
-    /**
-     * This method gets invoked for a winning hand.
-     * @param hid Target hand
-     */
+    // update the bankroll if someone wins
     @Override
     public void win(Hid hid) {
-        // Possible if You or Dealer wins, but it'll be one or the other.
-        info("WIN: "+hid);
+        // ensure the hid is the player's
+        assert hid.getSeat() == Seat.YOU;
 
-        if (gameNumber == 2){
-            assert hid.getSeat() == Seat.YOU;
+        info("WIN: " + hid);
+
+        // update the bankroll based on the game number and the results of the games
+        if (gameNumber == 2) {
             assert hid.getAmt() == 25;
             assert hid.getSideAmt() == 3 * 10;
-            // bankroll = 1055
-            assert bankroll == bankroll + (25 + 30);
-        } else {
-            assert false;
-        }
-
-        if (gameNumber == 3){
-            assert hid.getSeat() == Seat.YOU;
+            // Hid carries round P&L, so update cumulative bankroll from callback values.
+            bankroll += hid.getAmt() + hid.getSideAmt();
+            assert bankroll == 1055;
+        } else if (gameNumber == 3) {
             assert hid.getAmt() == 25;
             assert hid.getSideAmt() == -10;
-            // bankroll = 1070
-            assert bankroll == bankroll + (25 - 10);
-        } else {
-            assert false;
-        }
-
-        if (gameNumber == 6){
-            assert hid.getSeat() == Seat.YOU;
+            bankroll += hid.getAmt() + hid.getSideAmt();
+            assert bankroll == 1070;
+        } else if (gameNumber == 6) {
             assert hid.getAmt() == 25;
             assert hid.getSideAmt() == 25 * 10;
-            // bankroll = 1315
-            assert bankroll == bankroll + (25 + (25 * 10));
-        } else {
-            assert false;
-        }
-
-        if (gameNumber == 7){
-            assert hid.getSeat() == Seat.YOU;
+            bankroll += hid.getAmt() + hid.getSideAmt();
+            assert bankroll == 1315;
+        } else if (gameNumber == 7) {
             assert hid.getAmt() == 25;
             assert hid.getSideAmt() == -10;
-            // bankroll = 1330
-            assert bankroll == bankroll + (25 - 10);
-        } else {
-            assert false;
-        }
-
-        if (gameNumber == 8){
-            assert hid.getSeat() == Seat.YOU;
+            bankroll += hid.getAmt() + hid.getSideAmt();
+            assert bankroll == 1330;
+        } else if (gameNumber == 8) {
             assert hid.getAmt() == 25;
             assert hid.getSideAmt() == 10;
-            // bankroll = 1365
-            assert bankroll == bankroll + (25 + 10);
-        } else {
-            assert false;
-        }
-
-        if (gameNumber == 9){
-            assert hid.getSeat() == Seat.YOU;
+            bankroll += hid.getAmt() + hid.getSideAmt();
+            assert bankroll == 1365;
+        } else if (gameNumber == 9) {
             assert hid.getAmt() == 25;
             assert hid.getSideAmt() == 3 * 10;
-            // bankroll = 1420
-            assert bankroll == bankroll + (25 + 30);
+            bankroll += hid.getAmt() + hid.getSideAmt();
+            assert bankroll == 1420;
+        } else if (gameNumber == 10) {
+            assert hid.getAmt() == 25;
+            assert hid.getSideAmt() == -10;
+            bankroll += hid.getAmt() + hid.getSideAmt();
+            assert bankroll == 1435;
         } else {
-            assert false;
+            assert false : "unexpected win at game " + gameNumber;
         }
     }
 
-    /**
-     * This method gets invoked for a losing hand.
-     * @param hid Target hand
-     */
+    // update the bankroll if someone loses
     @Override
     public void lose(Hid hid) {
-        // Possible if You or Dealer loses, but it will be one or the other.
-        info("LOSE: "+hid);
+         // ensure the hid is the player's
+         assert hid.getSeat() == Seat.YOU;
 
-        if (gameNumber == 4){
-            assert hid.getSeat() == Seat.YOU;
+        info("LOSE: " + hid);
+
+        if (gameNumber == 4) {
             assert hid.getAmt() == -25;
             assert hid.getSideAmt() == 3 * 10;
-            // bankroll = 1075
-            assert bankroll == bankroll + (-25 + 30);
-        } else {
-            assert false;
-        }
-
-        if (gameNumber == 5){
-            assert hid.getSeat() == Seat.YOU;
+            bankroll += hid.getAmt() + hid.getSideAmt();
+            assert bankroll == 1075;
+        } else if (gameNumber == 5) {
             assert hid.getAmt() == -25;
             assert hid.getSideAmt() == -10;
-            // bankroll = 1040
-            assert bankroll == bankroll + (-25 - 10);
+            bankroll += hid.getAmt() + hid.getSideAmt();
+            assert bankroll == 1040;
         } else {
-            assert false;
+            assert false : "unexpected lose at game " + gameNumber;
         }
     }
 
-    /**
-     * This method gets invoked if a hand breaks.
-     * @param hid Target hand
-     */
     @Override
     public void bust(Hid hid) {
-        // Possible if You or Dealer breaks, but it will be one or the other.
-        info("BREAK: "+hid);
+        info("BREAK: " + hid);
 
-        // Not possible for this test case.
-        assert false;
+        // Dealer busts in games 8-10; player bust is never expected.
+        assert hid.getSeat() != Seat.YOU : "unexpected player bust at game " + gameNumber;
     }
 
-    /**
-     * This method gets invoked for a (natural) Blackjack hand, Ace+K, Ace+Q, etc.
-     * @param hid Target hand
-     */
+    // unexpected results for blackjack, split, or charlie
     @Override
     public void blackjack(Hid hid) {
-        // Possible if either You or Dealer has a blackjack.
-        info("BLACKJACK: "+hid);
+        info("BLACKJACK: " + hid);
 
-        // Not possible for this test case.
-        assert false;
+        assert false : "unexpected blackjack at game " + gameNumber;
     }
 
-    /**
-     * This method gets invoked when a player requests a split.
-     * For instance, a 4+4 split results in two hands, each with two cards,
-     * 4+x and 4+y where "x" and "y" are hits to each hand which the dealer
-     * automatically performs, respectively.
-     * @param newHid New hand split from the original.
-     * @param origHid Original hand.
-     */
     @Override
     public void split(Hid newHid, Hid origHid) {
-        // Not possible for this test case.
-        assert false;
+        assert false : "unexpected split at game " + gameNumber;
     }
 
-    /**
-     * This method gets invoked for a 5-card Charlie hand.
-     * @param hid Target hand
-     */
     @Override
     public void charlie(Hid hid) {
-        // Possible if either You or Dealer has a Charlie.
-        info("CHARLIE: "+hid);
+        info("CHARLIE: " + hid);
 
-        // Not possible for this test case.
-        assert false;
+        assert false : "unexpected charlie at game " + gameNumber;
     }
 
-    /**
-     * This method get invoked at the start of a game before any cards are dealt.
-     * @param hids Hands in the game
-     * @param shoeSize Current shoe size, ie, original shoe less cards dealt
-     */
     @Override
     public void startGame(List<Hid> hids, int shoeSize) {
-        // ensure game has 2 players, if not throw an exception
-        //assert hids.size() == 2;
+        info("game " + gameNumber + " STARTING shoe size: " + shoeSize);
+        waitingToStayAfterHit = false;
 
-        StringBuilder buffer = new StringBuilder();
-
-        buffer.append("game STARTING: ");
-        buffer.append(" shoe size: ").append(shoeSize);
-
-        // assign you to the hid
+        // Capture the player's Hid once per round for play() actions.
         for (Hid hid : hids) {
             if (hid.getSeat() == Seat.YOU) {
                 you = hid;
             }
         }
-
-        info(buffer.toString());
     }
 
-    /**
-     * This method gets invoked after a game ends and before the start of a new game.
-     * @param shoeSize Ending shoe size
-     */
     @Override
     public void endGame(int shoeSize) {
-        if(gameNumber == 10) {
+        info("ENDING game " + gameNumber + " shoe size: " + shoeSize);
+
+        if (gameNumber == 10) {
+            // Shoe must be empty after all the games, finish the test
             assert shoeSize == 0;
             assert bankroll == 1435;
             signal();
+            return;
         }
 
-        info("ENDING game shoe size: "+shoeSize);
+        // go to the next game
+        gameNumber++;
+        // game 1 has side bet 0, games 2-10 use side bet 10, so use that amount
+        bet(25, 10);
     }
 
-    /**
-     * This method gets invoked when the burn card appears, it indicates a
-     * re-shuffle is coming after the current game ends.
-     */
     @Override
     public void shuffling() {
         info("SHUFFLING");
     }
 
-    /**
-     * This method sets the courier.
-     * It's not used here because the base test case instantiates a courier for us.
-     * @param courier Courier
-     */
     @Override
     public void setCourier(Courier courier) {
     }
