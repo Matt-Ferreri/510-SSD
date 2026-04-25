@@ -10,6 +10,5 @@ charlie.debug false
 #charlie.bot.dewey charlie.server.bot.Dewey
 charlie.sidebet.rule libby.sidebet.rule.SideBetRule
 charlie.sidebet.view libby.sidebet.view.SideBetView
-charlie.shoe libby.sidebet.test.Shoe
-
+charlie.shoe libby.test.shoe.SplitAcesShoe1
 
