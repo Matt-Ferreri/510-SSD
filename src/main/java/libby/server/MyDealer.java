@@ -143,7 +143,6 @@ public class MyDealer extends Dealer {
         }
         // If hand got a Charlie or Blackjack, we're done with this hand
         else if (hand.isCharlie()) {
-//            hid.multiplyAmt(CHARLIE_PAYS);
             hid.request(Play.STAY);
 
             updateBankroll(hid, CHARLIE_PAYS);
